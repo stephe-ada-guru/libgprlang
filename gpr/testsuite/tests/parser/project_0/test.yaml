@@ -1,2 +1,2 @@
 driver: parser
-rule: project_decl
+rule: simple_project

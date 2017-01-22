@@ -2,22 +2,27 @@
 #
 # Language definition in (info "(gnat_ugn) Project Files for gnatxref and gnatfind")
 
-from langkit.compiled_types import ASTNode, abstract, root_grammar_class
-from langkit.parsers import Grammar, Row
+from langkit.parsers import Grammar, List, Or, Opt, Row, Tok
 
+from language.lexer import Token
 
-@abstract
-@root_grammar_class()
-class gprNode(ASTNode):
-    """
-    Root node class for gpr AST nodes.
-    """
-    pass
+from language.ast import *
 
-class ExampleNode(gprNode):
-    pass
+gpr_grammar = Grammar('compilation')
+G = gpr_grammar
 
-gpr_grammar = Grammar('main_rule')
 gpr_grammar.add_rules(
-    main_rule=Row('example') ^ ExampleNode
+    # rules in alphabetical order
+    compilation=Or(G.simple_project),
+
+    declarative_item=Row(G.identifier, ":=", G.expression, ";") ^ DeclarativeItem,
+    
+    declarative_items=List(G.declarative_item) ^ DeclarativeItems,
+
+    expression=Or(G.identifier) ^ Expression,
+    
+    identifier=Tok(Token.Identifier, keep=True) ^ Identifier,
+    
+    simple_project=Row(
+        "project", G.identifier, "is", Opt(G.declarative_items), "end", Opt(G.identifier), ";") ^ SimpleProject,
 )

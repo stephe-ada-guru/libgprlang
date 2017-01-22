@@ -260,7 +260,7 @@ class BaseTestsuite(object):
         )
         self.arg_parser.add_argument(
             '--enable-color', action='store_true',
-            default=os.isatty(sys.stdout.fileno()),
+            default=False,
             help='Enable colored console output'
         )
         self.arg_parser.add_argument(

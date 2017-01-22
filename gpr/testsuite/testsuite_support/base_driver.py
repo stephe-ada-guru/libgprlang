@@ -257,11 +257,14 @@ class BaseDriver(TestDriver):
         if memcheck and self.valgrind:
             argv = self.valgrind.wrap_argv(argv)
 
-        p = Run(argv, cwd=self.working_dir(),
-                timeout=self.TIMEOUT,
-                output=PIPE,
-                error=STDOUT)
-
+        try:
+            p = Run(argv, cwd=self.working_dir(),
+                    timeout=self.TIMEOUT,
+                    output=PIPE,
+                    error=STDOUT)
+        except OSError as e:
+            raise OSError("'" + program + "' not found")
+            
         if append_output:
             with open(self.output_file, 'a') as f:
                 f.write(p.out)
