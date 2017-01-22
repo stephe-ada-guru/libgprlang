@@ -1,9 +1,10 @@
 libgprlang
 ==========
 
-Libgprlang is a project to build a semantic engine for the AdaCore gpr
-project definition language. In particular, it provides an indentation
-engine for use by Emacs gpr-mode.
+Libgprlang is a project to provide a semantic engine for the AdaCore
+gpr project definition language, using AdaCore's
+[langkit](http://github.com/AdaCore/langkit). In particular, it
+provides an indentation engine for use by Emacs gpr-mode.
 
 Setup
 -----
@@ -12,17 +13,16 @@ To generate and build the library and executables:
 
 - Install the GNAT tools and compiler. You can find the GPL version of them on
   <http://libre.adacore.com>. Minimum version GPL 2016.
-  
-- Build and install the GNATcoll library, using the GitHub
-  distribution for license compatibility:
-  <https://github.com/AdaCore/gnatcoll>
-  checkout the `gpl-2016` branch.
-  libgprlang does not require the Python gnatcoll component.
-  
-- Install Quex version 0.65.4 -
-  <http://downloads.sourceforge.net/project/quex/DOWNLOAD/quex-0.65.4.tar.gz>
+
+- Build and install the `gpl-2016` branch of
+  the
+  [GNATcoll library from GitHub](https://github.com/AdaCore/gnatcoll)
+  (for license compatibility). libgprlang does not require the Python
+  gnatcoll component.
+
+- Install [Quex version 0.65.4](http://downloads.sourceforge.net/project/quex/DOWNLOAD/quex-0.65.4.tar.gz)
   Follow the installation guide in the Quex `README`
-  
+
 - Install the Python dependencies, using a virtualenv:
 
 ~~~
@@ -55,17 +55,13 @@ Install:
 Testing
 -------
 
-Set your environment for running tests:
-
-    $ eval gpr/manage.py setenv
-
 Run all tests:
 
-    $ gpr/testsuite/testsuite.py
+    $ gpr/manage.py test
 
 Run one test:
 
-    $ gpr/testsuite/testsuite.py gpr/testsuite/tests/parser/project_0
+    $ gpr/manage.py test --testsuite-args gpr/testsuite/tests/parser/project_0
 
 Documentation
 -------------
